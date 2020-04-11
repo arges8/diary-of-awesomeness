@@ -3,7 +3,9 @@ package com.arges.diaryofawesomeness.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import java.util.Date;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+import java.sql.Date;
 import java.util.List;
 
 
@@ -15,6 +17,7 @@ public class Note {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotNull(message = "Day has to be set")
     private Date day;
 
     @ElementCollection
