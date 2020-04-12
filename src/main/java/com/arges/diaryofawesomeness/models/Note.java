@@ -3,7 +3,6 @@ package com.arges.diaryofawesomeness.models;
 import lombok.Data;
 
 import javax.persistence.*;
-import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
 import java.util.List;
@@ -22,4 +21,5 @@ public class Note {
 
     @ElementCollection
     private List<String> positiveEvents;
+
 }
