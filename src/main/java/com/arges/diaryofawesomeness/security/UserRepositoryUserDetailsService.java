@@ -1,7 +1,7 @@
 package com.arges.diaryofawesomeness.security;
 
 import com.arges.diaryofawesomeness.data.UserRepository;
-import com.arges.diaryofawesomeness.models.User;
+import com.arges.diaryofawesomeness.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

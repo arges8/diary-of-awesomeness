@@ -1,4 +1,4 @@
-package com.arges.diaryofawesomeness.models;
+package com.arges.diaryofawesomeness.model;
 
 import lombok.Data;
 
@@ -16,7 +16,7 @@ public class Note {
     private User user;
 
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
     @NotNull(message = "Day has to be set")

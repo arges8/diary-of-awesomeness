@@ -1,6 +1,6 @@
 package com.arges.diaryofawesomeness.security;
 
-import com.arges.diaryofawesomeness.models.User;
+import com.arges.diaryofawesomeness.model.User;
 import lombok.Data;
 import org.springframework.security.crypto.password.PasswordEncoder;
 
