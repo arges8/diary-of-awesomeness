@@ -31,13 +31,18 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
+                .antMatchers("/note", "/note/**")
+                .hasRole("USER")
                 .antMatchers("/", "/**")
-                .permitAll();
-        http.csrf()
+                .permitAll()
+            .and()
+                .csrf()
                 //.ignoringAntMatchers("/h2-console/**");
-            .disable();
+                .disable();
         http.headers()
                 .frameOptions()
-                .sameOrigin();
+                .sameOrigin()
+            .and()
+                .httpBasic();
     }
 }

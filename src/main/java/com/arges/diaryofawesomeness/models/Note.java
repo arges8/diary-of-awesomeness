@@ -12,6 +12,9 @@ import java.util.List;
 @Entity
 public class Note {
 
+    @ManyToOne
+    private User user;
+
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
