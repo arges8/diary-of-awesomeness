@@ -5,7 +5,8 @@ import com.arges.diaryofawesomeness.model.User;
 import com.arges.diaryofawesomeness.web.RegistrationForm;
 import org.junit.jupiter.api.Test;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.mockito.InjectMocks;
+import org.mockito.Mock;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
@@ -14,15 +15,16 @@ import org.springframework.validation.ObjectError;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 class RegistrationFormValidatorTest {
 
-    @Autowired
-    private RegistrationFormValidator validator;
-
-    @Autowired
+    @Mock
     private UserRepository userRepo;
+
+    @InjectMocks
+    private RegistrationFormValidator validator;
 
     @Test
     public void testCorrectForm() {
@@ -111,8 +113,10 @@ class RegistrationFormValidatorTest {
 
     @Test
     public void testUserWithGivenUsernameAlreadyExists() {
+        when(userRepo.findByUsername("test_user1"))
+                .thenReturn(new User("test_user1", "admin1234", "test_user1@jar.pl"));
+
         //given
-        createUser("test_user1", "admin1234", "test_user1@jar.pl");
         RegistrationForm form = new RegistrationForm();
         form.setUsername("test_user1");
         form.setPassword("password");
@@ -127,11 +131,6 @@ class RegistrationFormValidatorTest {
         //then
         validateErrorCodes(errors, 1, expectedCodes);
 
-    }
-
-    private void createUser(String username, String password, String email) {
-        User user = new User(username, password, email);
-        userRepo.save(user);
     }
 
     private void validateErrorCodes(Errors errors, int expectedNumberOfErrors, List<String> expectedCodes) {
