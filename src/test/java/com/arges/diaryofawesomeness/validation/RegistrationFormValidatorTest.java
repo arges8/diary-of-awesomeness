@@ -3,11 +3,12 @@ package com.arges.diaryofawesomeness.validation;
 import com.arges.diaryofawesomeness.data.UserRepository;
 import com.arges.diaryofawesomeness.model.User;
 import com.arges.diaryofawesomeness.web.RegistrationForm;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.mockito.MockitoAnnotations;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -17,14 +18,18 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
 class RegistrationFormValidatorTest {
+
+    @InjectMocks
+    private RegistrationFormValidator validator;
 
     @Mock
     private UserRepository userRepo;
 
-    @InjectMocks
-    private RegistrationFormValidator validator;
+    @BeforeEach
+    public void initMocks() {
+        MockitoAnnotations.initMocks(this);
+    }
 
     @Test
     public void testCorrectForm() {
