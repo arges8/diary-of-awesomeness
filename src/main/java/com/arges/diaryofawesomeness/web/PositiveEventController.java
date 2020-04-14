@@ -10,7 +10,10 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.List;
+import java.util.Map;
 
 @RestController
 @Validated
@@ -21,7 +24,7 @@ public class PositiveEventController {
     private NoteRepository noteRepo;
 
     @PostMapping("/{noteId}")
-    public ResponseEntity<Note> addPositiveEventsToNote(@PathVariable("noteId") Long noteId,
+    public ResponseEntity<Object> addPositiveEventsToNote(@PathVariable("noteId") Long noteId,
                                                   @RequestBody List<String> events,
                                                   @AuthenticationPrincipal User user) {
         Note note = noteRepo.findById(noteId).get();
@@ -31,6 +34,12 @@ public class PositiveEventController {
             return new ResponseEntity<>(savedNote, HttpStatus.OK);
         }
 
-        return new ResponseEntity<>(null, HttpStatus.BAD_REQUEST);
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
+        body.put("noteId", noteId);
+        body.put("status", HttpStatus.FORBIDDEN.value());
+        body.put("message", "Events were not added");
+
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 }

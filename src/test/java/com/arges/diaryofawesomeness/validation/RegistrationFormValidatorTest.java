@@ -75,7 +75,8 @@ class RegistrationFormValidatorTest {
         form.setPasswordConfirm("password");
         form.setEmail("mar@jar.pl");
         Errors errors = new BeanPropertyBindingResult(form, "validForm");
-        List<String> expectedCodes = List.of("NotEmpty", "Size.registrationForm.password", "Diff.registrationForm.passwordConfirm");
+        List<String> expectedCodes = List.of("NotEmpty", "Size.registrationForm.password",
+                "Diff.registrationForm.passwordConfirm");
 
         //when
         validator.validate(form, errors);
@@ -232,7 +233,8 @@ class RegistrationFormValidatorTest {
     public void testUserWithGivenUsernameAlreadyExists() {
         //given
         when(userRepo.findByUsername("test_user1"))
-            .thenReturn(new User("test_user1", "admin1234", "test_user1@jar.pl"));
+            .thenReturn(new User("test_user1", "admin1234",
+                    "test_user1@jar.pl"));
 
         RegistrationForm form = new RegistrationForm();
         form.setUsername("test_user1");
@@ -275,16 +277,17 @@ class RegistrationFormValidatorTest {
         assertEquals(expectedNumberOfErrors, errorList.size());
         errorList.forEach(e -> checkIfContainCodes(e, expectedCodes));
     }
+
     private void checkIfContainCodes(ObjectError error, List<String> codes) {
         String errorCode = error.getCode();
         if(errorCode == null)
             fail();
 
-        long size = codes.stream()
+        long matchingCodesNumber = codes.stream()
                          .filter(errorCode::contains)
                          .count();
 
-        assertEquals(1, size);
+        assertEquals(1, matchingCodesNumber);
     }
 
 

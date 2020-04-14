@@ -10,7 +10,8 @@ import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.HashMap;
+import java.util.Date;
+import java.util.LinkedHashMap;
 import java.util.Map;
 
 @RestController
@@ -36,15 +37,19 @@ public class NoteController {
     @ResponseStatus(code = HttpStatus.NO_CONTENT)
     public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId, @AuthenticationPrincipal User user) {
         Note note = noteRepo.findById(noteId).get();
-        Map<String, Object> body = new HashMap<>();
+        Map<String, Object> body = new LinkedHashMap<>();
+        body.put("timestamp", new Date());
         body.put("noteId", noteId);
         if(note.getUser().equals(user)) {
-            body.put("result", "Note deleted");
             noteRepo.deleteById(noteId);
+            body.put("status", HttpStatus.OK.value());
+            body.put("message", "Note deleted");
 
             return new ResponseEntity<>(body, HttpStatus.OK);
         }
-        body.put("result", "Note was not deleted");
-        return new ResponseEntity<>(body, HttpStatus.BAD_REQUEST);
+        body.put("status", HttpStatus.FORBIDDEN.value());
+        body.put("message", "Note was not deleted");
+
+        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
     }
 }
