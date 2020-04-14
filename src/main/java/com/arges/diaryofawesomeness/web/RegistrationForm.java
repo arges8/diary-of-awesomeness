@@ -1,4 +1,4 @@
-package com.arges.diaryofawesomeness.security;
+package com.arges.diaryofawesomeness.web;
 
 import com.arges.diaryofawesomeness.model.User;
 import lombok.Data;
