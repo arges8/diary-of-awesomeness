@@ -21,9 +21,9 @@ public class NoteController {
     @Autowired
     private NoteRepository noteRepo;
 
-    @GetMapping
-    public String hello() {
-        return "Hey beautiful ;)";
+    @GetMapping("/{noteId}")
+    public Note getNote(@PathVariable("noteId") Long noteId) {
+        return noteRepo.findById(noteId).get();
     }
 
     @PostMapping
@@ -32,6 +32,7 @@ public class NoteController {
         note.setUser(user);
         return noteRepo.save(note);
     }
+
     @DeleteMapping("/{noteId}")
     public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId) {
         noteRepo.deleteById(noteId);
@@ -44,23 +45,4 @@ public class NoteController {
 
         return new ResponseEntity<>(body, HttpStatus.OK);
     }
-
-//    @DeleteMapping("/{noteId}")
-//    public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId, @AuthenticationPrincipal User user) {
-//        Note note = noteRepo.findById(noteId).get();
-//        Map<String, Object> body = new LinkedHashMap<>();
-//        body.put("timestamp", new Date());
-//        body.put("noteId", noteId);
-//        if(note.getUser().equals(user)) {
-//            noteRepo.deleteById(noteId);
-//            body.put("status", HttpStatus.OK.value());
-//            body.put("message", "Note deleted");
-//
-//            return new ResponseEntity<>(body, HttpStatus.OK);
-//        }
-//        body.put("status", HttpStatus.FORBIDDEN.value());
-//        body.put("message", "Note was not deleted");
-//
-//        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
-//    }
 }
