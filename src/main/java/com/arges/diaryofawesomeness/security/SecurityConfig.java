@@ -31,8 +31,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/note", "/note/**")
+                .antMatchers("/note")
                 .hasRole("USER")
+                .antMatchers("/note/{noteId}")
+                .access("@userSecurity.hasNoteId(authentication, #noteId)")
                 .antMatchers("/", "/**")
                 .permitAll()
             .and()

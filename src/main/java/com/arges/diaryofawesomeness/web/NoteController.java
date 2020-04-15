@@ -32,24 +32,35 @@ public class NoteController {
         note.setUser(user);
         return noteRepo.save(note);
     }
-
     @DeleteMapping("/{noteId}")
-    @ResponseStatus(code = HttpStatus.NO_CONTENT)
-    public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId, @AuthenticationPrincipal User user) {
-        Note note = noteRepo.findById(noteId).get();
+    public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId) {
+        noteRepo.deleteById(noteId);
+
         Map<String, Object> body = new LinkedHashMap<>();
         body.put("timestamp", new Date());
+        body.put("status", HttpStatus.OK.value());
         body.put("noteId", noteId);
-        if(note.getUser().equals(user)) {
-            noteRepo.deleteById(noteId);
-            body.put("status", HttpStatus.OK.value());
-            body.put("message", "Note deleted");
+        body.put("message", "Note with id=" + noteId + " deleted");
 
-            return new ResponseEntity<>(body, HttpStatus.OK);
-        }
-        body.put("status", HttpStatus.FORBIDDEN.value());
-        body.put("message", "Note was not deleted");
-
-        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>(body, HttpStatus.OK);
     }
+
+//    @DeleteMapping("/{noteId}")
+//    public ResponseEntity<Object> deleteNote(@PathVariable("noteId") Long noteId, @AuthenticationPrincipal User user) {
+//        Note note = noteRepo.findById(noteId).get();
+//        Map<String, Object> body = new LinkedHashMap<>();
+//        body.put("timestamp", new Date());
+//        body.put("noteId", noteId);
+//        if(note.getUser().equals(user)) {
+//            noteRepo.deleteById(noteId);
+//            body.put("status", HttpStatus.OK.value());
+//            body.put("message", "Note deleted");
+//
+//            return new ResponseEntity<>(body, HttpStatus.OK);
+//        }
+//        body.put("status", HttpStatus.FORBIDDEN.value());
+//        body.put("message", "Note was not deleted");
+//
+//        return new ResponseEntity<>(body, HttpStatus.FORBIDDEN);
+//    }
 }
