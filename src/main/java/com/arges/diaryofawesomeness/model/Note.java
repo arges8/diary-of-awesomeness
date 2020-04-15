@@ -5,7 +5,7 @@ import lombok.Data;
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.sql.Date;
-import java.util.List;
+import java.util.Set;
 
 
 @Data
@@ -23,6 +23,6 @@ public class Note {
     private Date day;
 
     @ElementCollection
-    private List<String> positiveEvents;
+    private Set<String> positiveEvents;
 
 }
