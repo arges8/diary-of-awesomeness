@@ -33,7 +33,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         http.authorizeRequests()
                 .antMatchers("/note")
                 .hasRole("USER")
-                .antMatchers("/note/{noteId}")
+                .antMatchers("/note/{noteId}", "/note/{noteId}/**")
                 .access("@userSecurity.hasNoteId(authentication, #noteId)")
                 .antMatchers("/", "/**")
                 .permitAll()
