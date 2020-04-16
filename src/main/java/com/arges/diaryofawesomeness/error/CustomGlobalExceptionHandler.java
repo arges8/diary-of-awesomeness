@@ -41,6 +41,6 @@ public class CustomGlobalExceptionHandler extends ResponseEntityExceptionHandler
 
     @ExceptionHandler(NoSuchElementException.class)
     public void handleNoSuchElementException(HttpServletResponse response) throws IOException {
-        response.sendError(HttpStatus.BAD_REQUEST.value());
+        response.sendError(HttpStatus.NOT_FOUND.value());
     }
 }
