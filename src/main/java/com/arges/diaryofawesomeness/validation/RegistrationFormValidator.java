@@ -5,7 +5,6 @@ import com.arges.diaryofawesomeness.data.UserRepository;
 import com.arges.diaryofawesomeness.model.User;
 import com.arges.diaryofawesomeness.web.RegistrationForm;
 import org.apache.commons.validator.routines.EmailValidator;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ValidationUtils;
@@ -15,9 +14,11 @@ import org.springframework.validation.Validator;
 public class RegistrationFormValidator implements Validator {
 
     private EmailValidator emailValidator = EmailValidator.getInstance();
-
-    @Autowired
     private UserRepository userRepo;
+
+    public RegistrationFormValidator(UserRepository userRepo) {
+        this.userRepo = userRepo;
+    }
 
     @Override
     public boolean supports(Class<?> aClass) {

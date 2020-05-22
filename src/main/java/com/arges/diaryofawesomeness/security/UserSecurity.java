@@ -3,7 +3,6 @@ package com.arges.diaryofawesomeness.security;
 import com.arges.diaryofawesomeness.data.NoteRepository;
 import com.arges.diaryofawesomeness.model.Note;
 import com.arges.diaryofawesomeness.model.User;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
 
@@ -12,8 +11,11 @@ import java.util.Optional;
 @Component("userSecurity")
 public class UserSecurity {
 
-    @Autowired
     private NoteRepository noteRepo;
+
+    public UserSecurity(NoteRepository noteRepo) {
+        this.noteRepo = noteRepo;
+    }
 
     public boolean hasNoteId(Authentication authentication, Long noteId) {
         Optional<Note> optionalNote = noteRepo.findById(noteId);
