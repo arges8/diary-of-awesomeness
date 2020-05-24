@@ -1,7 +1,6 @@
 package com.arges.diaryofawesomeness.security;
 
-import com.arges.diaryofawesomeness.filter.JwtRequestFilter;
-import org.springframework.beans.factory.annotation.Autowired;
+import com.arges.diaryofawesomeness.security.filter.JwtRequestFilter;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;

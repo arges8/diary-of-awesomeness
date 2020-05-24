@@ -3,10 +3,10 @@ package com.arges.diaryofawesomeness.web;
 import com.arges.diaryofawesomeness.data.UserRepository;
 import com.arges.diaryofawesomeness.validation.RegistrationFormValidator;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,15 +16,18 @@ import org.springframework.web.bind.annotation.RequestMapping;
 @RequestMapping(path = "/register")
 public class RegistrationController {
 
-    @Autowired
     private UserRepository userRepo;
 
-    @Autowired
     private PasswordEncoder passwordEncoder;
 
-    @Autowired
     private RegistrationFormValidator registrationFormValidator;
 
+    public RegistrationController(UserRepository userRepo, PasswordEncoder passwordEncoder,
+                                  RegistrationFormValidator registrationFormValidator) {
+        this.userRepo = userRepo;
+        this.passwordEncoder = passwordEncoder;
+        this.registrationFormValidator = registrationFormValidator;
+    }
 
     @GetMapping
     public String getRegisterForm(RegistrationForm registrationForm) {
@@ -37,7 +40,7 @@ public class RegistrationController {
         if(bindingResult.hasErrors()) {
             bindingResult.getAllErrors()
                     .stream()
-                    .map(e -> e.toString())
+                    .map(ObjectError::toString)
                     .forEach(log::info);
             return "registration";
         }

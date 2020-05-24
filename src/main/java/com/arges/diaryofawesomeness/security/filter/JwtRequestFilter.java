@@ -1,9 +1,8 @@
-package com.arges.diaryofawesomeness.filter;
+package com.arges.diaryofawesomeness.security.filter;
 
 import com.arges.diaryofawesomeness.security.UserRepositoryUserDetailsService;
 import com.arges.diaryofawesomeness.security.util.JwtUtil;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;

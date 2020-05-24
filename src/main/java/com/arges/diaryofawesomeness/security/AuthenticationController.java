@@ -3,7 +3,6 @@ package com.arges.diaryofawesomeness.security;
 import com.arges.diaryofawesomeness.model.AuthenticationRequest;
 import com.arges.diaryofawesomeness.model.AuthenticationResponse;
 import com.arges.diaryofawesomeness.security.util.JwtUtil;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
